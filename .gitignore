@@ -1,0 +1,15 @@
+# C++ build output
+build/
+out/
+
+# Dashboard
+dashboard/node_modules/
+dashboard/dist/
+
+# Editors and OS
+.vs/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

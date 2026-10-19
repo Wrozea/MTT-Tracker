@@ -3,6 +3,9 @@ build/
 build-*/
 out/
 
+# Personal study notes, kept local
+docs/learning-notes.md
+
 # Dashboard
 dashboard/node_modules/
 dashboard/dist/

@@ -73,6 +73,13 @@ Do not substitute any of these without asking the owner first.
 - After each milestone: build, run all tests, show the output, explain in
   plain English what was built, how it works, and why each decision was made,
   then suggest a commit message. The owner makes the commits.
+- At the end of every milestone, append that milestone's section to
+  `docs/learning-notes.md`: the concepts to understand (short plain-English
+  explanations), the bugs hit and what caused them, and likely interview
+  questions with short answers. Bugs found after a milestone closes go into
+  that milestone's section. The file is gitignored and stays on the owner's
+  machine; create it if it is missing, and never remove it from
+  `.gitignore`.
 - If something in the spec looks like a bad idea, say so before doing it.
 - For the Kalman filter and the Hungarian algorithm, explain the idea and the
   math before writing any code, then offer to let the owner try implementing

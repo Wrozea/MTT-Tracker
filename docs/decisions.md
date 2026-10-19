@@ -17,6 +17,17 @@ than a paragraph get their own file in this folder.
 - JSON serialization uses nlohmann/json.
 - CI builds with warnings as errors on Ubuntu (GCC) and Windows (MSVC). Two
   compilers catch non-portable code that one alone would accept.
+- `MTT_ENABLE_ASAN=ON` builds with AddressSanitizer (MSVC `/fsanitize=address`,
+  GCC/Clang `-fsanitize=address`). It caught a use-after-free in a sensor test
+  that read garbage on GCC and happened to work on MSVC: an `auto` variable
+  held an unevaluated Eigen expression pointing into a temporary. Eigen
+  results are therefore always stored in an explicit type, never `auto`.
+- CI has a third job: Ubuntu Debug with ASan and UBSan
+  (`MTT_ENABLE_UBSAN=ON`, GCC/Clang only). It runs the tests and the full demo
+  scenario. UBSan is built with `-fno-sanitize-recover` so any report fails
+  the job; by default it would only print a message. This job does not treat
+  warnings as errors, because sanitizer instrumentation can produce
+  false-positive GCC warnings and the Release jobs already enforce warnings.
 - `CMAKE_CXX_EXTENSIONS OFF` builds in strict ISO C++ mode for portability.
 - GCC and Clang build with `-ffp-contract=off`, so they never fuse
   `a * b + c` into one fused multiply-add instruction. A fused operation

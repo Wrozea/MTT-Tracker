@@ -24,6 +24,7 @@ option(MTT_BUILD_TESTS "Build unit tests" ON)
 option(MTT_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 include(cmake/Warnings.cmake)
+include(cmake/Sanitizers.cmake)
 include(cmake/Dependencies.cmake)
 
 add_library(mtt_core
@@ -39,6 +40,7 @@ mtt_enable_warnings(mtt_core)
 add_executable(tracker apps/tracker_main.cpp)
 target_link_libraries(tracker PRIVATE mtt_core)
 mtt_enable_warnings(tracker)
+mtt_copy_asan_runtime(tracker)
 
 if(MTT_BUILD_TESTS)
     enable_testing()

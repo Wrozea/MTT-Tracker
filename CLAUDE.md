@@ -36,7 +36,8 @@ Do not substitute any of these without asking the owner first.
 - Metrics follow CLEAR MOT (Bernardin and Stiefelhagen, 2008): MOTA, MOTP, ID
   switches, plus position RMSE and false track count. Do not invent a metric.
 - Dashboard: React + TypeScript + Vite, drawn on an HTML canvas.
-- Docker Compose for one-command runs, GitHub Actions CI on Ubuntu and Windows.
+- Docker Compose for one-command runs, GitHub Actions CI on Ubuntu and Windows
+  (Release, warnings as errors), plus an Ubuntu Debug job with ASan and UBSan.
 
 ## Scope decisions
 
@@ -84,6 +85,10 @@ Do not substitute any of these without asking the owner first.
 - Comments only where the "why" is not obvious. No filler comments.
 - No emojis in code or docs. No ASCII banners.
 - Every algorithm gets unit tests.
+- Never store an Eigen expression in `auto`. Write the type
+  (`Eigen::Vector2d`, `Eigen::Matrix4d`) so the result is computed
+  immediately; `auto` keeps an unevaluated expression that references its
+  operands, which dangles if an operand is a temporary.
 
 ## Build and test
 
@@ -92,3 +97,12 @@ From the repository root:
     cmake -S core -B build
     cmake --build build --config Release
     ctest --test-dir build -C Release --output-on-failure
+
+With AddressSanitizer (run this before declaring a milestone done):
+
+    cmake -S core -B build-asan -DMTT_ENABLE_ASAN=ON
+    cmake --build build-asan --config Debug
+    ctest --test-dir build-asan -C Debug --output-on-failure
+
+The local machine has only MSVC. GCC-specific warnings and behavior are
+checked only by CI on Ubuntu.

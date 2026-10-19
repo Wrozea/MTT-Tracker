@@ -24,3 +24,28 @@ jobs:
 
       - name: Test
         run: ctest --test-dir build -C Release --output-on-failure
+
+  core-sanitizers:
+    name: core (ubuntu, ASan + UBSan)
+    runs-on: ubuntu-latest
+    # Warnings are already enforced by the Release jobs. Sanitizer
+    # instrumentation can trigger false-positive GCC warnings, so this job
+    # only checks runtime behavior.
+    env:
+      ASAN_OPTIONS: detect_leaks=1:abort_on_error=1
+      UBSAN_OPTIONS: print_stacktrace=1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S core -B build -DCMAKE_BUILD_TYPE=Debug -DMTT_ENABLE_ASAN=ON -DMTT_ENABLE_UBSAN=ON
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Run full demo scenario
+        run: ./build/tracker --frames 1200 --print-every 100000

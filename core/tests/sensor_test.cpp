@@ -80,7 +80,9 @@ TEST(Sensor, NoiseHasConfiguredStandardDeviation) {
     double squared_error_y = 0.0;
     constexpr int kFrames = 20000;
     for (int i = 0; i < kFrames; ++i) {
-        const auto error = sensor.observe({target}).detections[0].position - target.state.position;
+        // Spelled out rather than auto: auto would hold Eigen's unevaluated
+        // expression, which keeps a reference into the temporary SensorReturn.
+        const Eigen::Vector2d error = sensor.observe({target}).detections[0].position - target.state.position;
         squared_error_x += error.x() * error.x();
         squared_error_y += error.y() * error.y();
     }

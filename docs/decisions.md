@@ -35,7 +35,24 @@ than a paragraph get their own file in this folder.
   `std::log`, `std::sin`, and `std::cos` can differ in the last bit between
   standard libraries, and those differences can grow over a long run. CI
   metric checks therefore compare with a tolerance. Details are in
-  `docs/determinism.md` (written in milestone 2).
+  `docs/determinism.md`.
+- Each subsystem draws from its own random stream, so raising the clutter
+  rate does not change the noise on target detections.
+
+## Simulator
+
+- Ground truth uses an exact constant-turn model, so a target's path does not
+  depend on the frame rate. Details are in `docs/simulator.md`.
+- Ground truth follows its script with no random motion. Scripted motion
+  makes the hard cases (crossings, turns) happen exactly where and when the
+  scenario says, so tests can check them.
+- A target is retired once it leaves sensor coverage. Otherwise metrics would
+  count the tracker as failing on targets nobody can see.
+- Sensor output is shuffled so that list order cannot leak which detections
+  are real.
+- Each detection's origin is recorded for the dashboard and tests, kept beside
+  the detections rather than inside `Detection`, so the tracker cannot read
+  it by accident.
 
 ## Tracking
 

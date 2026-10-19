@@ -27,8 +27,13 @@ include(cmake/Warnings.cmake)
 include(cmake/Dependencies.cmake)
 
 add_library(mtt_core
-    src/version.cpp)
+    src/random.cpp
+    src/sim/motion.cpp
+    src/sim/scenario.cpp
+    src/sim/sensor.cpp
+    src/sim/simulator.cpp)
 target_include_directories(mtt_core PUBLIC include)
+target_link_libraries(mtt_core PUBLIC Eigen3::Eigen)
 mtt_enable_warnings(mtt_core)
 
 add_executable(tracker apps/tracker_main.cpp)

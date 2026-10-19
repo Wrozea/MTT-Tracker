@@ -1,5 +1,8 @@
 add_executable(mtt_tests
-    version_test.cpp)
+    motion_test.cpp
+    random_test.cpp
+    sensor_test.cpp
+    simulator_test.cpp)
 target_link_libraries(mtt_tests PRIVATE mtt_core GTest::gtest_main)
 mtt_enable_warnings(mtt_tests)
 

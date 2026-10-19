@@ -32,11 +32,12 @@ std::vector<TruthTarget> twoTargets() {
 
 TEST(Sensor, PerfectSensorReportsExactTruePositions) {
     Sensor sensor(perfectSensor(), Rng(1));
-    const SensorReturn result = sensor.observe(twoTargets());
+    const std::vector<TruthTarget> targets = twoTargets();
+    const SensorReturn result = sensor.observe(targets);
 
     ASSERT_EQ(result.detections.size(), 2u);
     for (std::size_t i = 0; i < result.detections.size(); ++i) {
-        const auto& target = result.origins[i] == 7 ? twoTargets()[0] : twoTargets()[1];
+        const TruthTarget& target = result.origins[i] == 7 ? targets[0] : targets[1];
         EXPECT_EQ(result.detections[i].position, target.state.position);
     }
 }

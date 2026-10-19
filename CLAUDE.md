@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-Working rules for this repository. Read this before making changes.
+Working rules for this repository. Read this before making changes, then read
+`docs/progress.md` for the current status and what to do next.
 
 ## Project
 
@@ -21,6 +22,7 @@ interview. Favor clarity over cleverness, and explain decisions.
 - `dashboard/` React + TypeScript + Vite app.
 - `docs/` Architecture notes and design decisions. `docs/decisions.md` is the
   running log of decisions; add to it when a choice is made.
+  `docs/progress.md` holds current status and the next step.
 
 ## Fixed tech choices
 
@@ -80,6 +82,15 @@ Do not substitute any of these without asking the owner first.
   that milestone's section. The file is gitignored and stays on the owner's
   machine; create it if it is missing, and never remove it from
   `.gitignore`.
+- Update `docs/progress.md` at the end of every milestone: status table,
+  what exists, the plan for the next milestone, and any new environment
+  notes.
+- Back up the learning notes: copy `docs/learning-notes.md` to
+  `C:\Users\18155\Documents\mtt-notes\learning-notes.md` (a clone of the
+  private repo `Wrozea/mtt-notes`), commit there, and push. This is the one
+  place Claude commits and pushes without being asked each time; commits to
+  this repository are still made by the owner. The GitHub CLI is at
+  `C:\Program Files\GitHub CLI\gh.exe` and is not on PATH.
 - If something in the spec looks like a bad idea, say so before doing it.
 - For the Kalman filter and the Hungarian algorithm, explain the idea and the
   math before writing any code, then offer to let the owner try implementing
